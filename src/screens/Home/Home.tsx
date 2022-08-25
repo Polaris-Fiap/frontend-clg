@@ -1,8 +1,16 @@
+import { useNavigation } from "@react-navigation/native"
 import React from "react"
-import { View } from "react-native"
+import { View, Button } from "react-native"
+import { routes } from "../../utils/constants"
 
 export const Home = () => {
-  return <View style={{ flex: 1, backgroundColor: "#0099ff" }}></View>
+  const navigation = useNavigation()
+
+  return (
+    <View style={{ flex: 1, backgroundColor: "#0099ff" }}>
+      <Button title='Buscar especialistas' onPress={() => navigation.navigate("buscaEspecialistas")} />
+    </View>
+  )
 }
 
 export default Home
