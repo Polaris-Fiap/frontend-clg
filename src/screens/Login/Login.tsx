@@ -1,9 +1,13 @@
-import React from "react"
+import { useNavigation } from "@react-navigation/native"
+import React, { useContext } from "react"
 import { View, StyleSheet, SafeAreaView, StatusBar } from "react-native"
 import { TextInput, Button, Text } from "react-native-paper"
+import { AuthContext } from "../../contexts"
 import { theme } from "../../styles/theme"
 
 export const Login = () => {
+  const { handleLogin } = useContext(AuthContext)
+  const navigation = useNavigation()
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.grupoInput}>
@@ -14,10 +18,10 @@ export const Login = () => {
           <Button style={styles.buttonEsqueceuSenha}>Esqueceu a senha?</Button>
         </View>
 
-        <Button mode='contained' style={styles.botao}>
+        <Button mode='contained' style={styles.botao} onPress={() => handleLogin()}>
           Entrar
         </Button>
-        <Button>Não tem conta? Cadastre-se</Button>
+        <Button onPress={() => navigation.navigate("cadastro")}>Não tem conta? Cadastre-se</Button>
       </View>
     </SafeAreaView>
   )
