@@ -1,11 +1,13 @@
 import { NavigationContainer } from "@react-navigation/native"
+import { useContext } from "react"
+import { AuthContext } from "../contexts"
 
-import { LoginRoutes } from "./routes"
+import { LoggedoutRoutes } from "./drawer.routes"
+import { LoginRoutes } from "./tab.routes"
 
 export const Routes = () => {
+  const { logged } = useContext(AuthContext)
   return (
-    <NavigationContainer>
-      <LoginRoutes />
-    </NavigationContainer>
+    <NavigationContainer>{logged === true ? <LoginRoutes /> : <LoggedoutRoutes />}</NavigationContainer>
   )
 }
