@@ -18,7 +18,6 @@ export const Login = () => {
           <TextInput label="Senha" mode="flat" style={styles.input} placeholder="Digite sua senha" />
           <Button style={styles.buttonEsqueceuSenha}>Esqueceu a senha?</Button>
         </View>
-
         <Button mode="contained" style={styles.botao} onPress={() => handleLogin()}>
           Entrar
         </Button>
