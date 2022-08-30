@@ -2,12 +2,13 @@ import { useNavigation } from "@react-navigation/native"
 import React from "react"
 import { SafeAreaView, View, StyleSheet, StatusBar } from "react-native"
 import { Button, Text, TextInput } from "react-native-paper"
+import ContainerView from "../../components/ContainerView"
 import { theme } from "../../styles/theme"
 
 export const SignUp = () => {
   const navigation = useNavigation()
   return (
-    <SafeAreaView style={styles.container}>
+    <ContainerView>
       <View style={styles.grupoInput}>
         <Text variant='headlineMedium'>Sign Up</Text>
         <TextInput label='Email' mode='flat' style={styles.input} placeholder='Digite seu nome completo' />
@@ -21,18 +22,13 @@ export const SignUp = () => {
         </Button>
         <Button onPress={() => navigation.navigate("login")}>Já tem uma conta? Entre aqui</Button>
       </View>
-    </SafeAreaView>
+    </ContainerView>
   )
 }
 
 export default SignUp
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: StatusBar.currentHeight,
-    justifyContent: "center",
-  },
   grupoInput: {
     justifyContent: "center",
     marginHorizontal: 40,

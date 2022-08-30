@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native"
 import React, { useContext } from "react"
 import { View, StyleSheet, SafeAreaView, StatusBar } from "react-native"
 import { TextInput, Button, Text } from "react-native-paper"
+import ContainerView from "../../components/ContainerView"
 import { AuthContext } from "../../contexts"
 import { theme } from "../../styles/theme"
 
@@ -9,7 +10,7 @@ export const Login = () => {
   const { handleLogin } = useContext(AuthContext)
   const navigation = useNavigation()
   return (
-    <SafeAreaView style={styles.container}>
+    <ContainerView>
       <View style={styles.grupoInput}>
         <Text variant='headlineMedium'>Login</Text>
         <TextInput label='Email' mode='flat' style={styles.input} placeholder='Digite seu email' />
@@ -23,18 +24,13 @@ export const Login = () => {
         </Button>
         <Button onPress={() => navigation.navigate("cadastro")}>Não tem conta? Cadastre-se</Button>
       </View>
-    </SafeAreaView>
+    </ContainerView>
   )
 }
 
 export default Login
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: StatusBar.currentHeight,
-    justifyContent: "center",
-  },
   grupoInput: {
     justifyContent: "center",
     marginHorizontal: 40,
