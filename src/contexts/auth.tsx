@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react"
+import React, { createContext, useState } from 'react'
 
 interface AuthContextProps {
   logged?: boolean
@@ -8,7 +8,7 @@ interface AuthContextProps {
 
 export const AuthContext = createContext<AuthContextProps>({
   handleLogin: () => {},
-  handleLogout: () => {},
+  handleLogout: () => {}
 })
 
 export const AuthProvider: React.FC = ({ children }) => {
