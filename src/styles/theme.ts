@@ -1,5 +1,9 @@
 export const theme = {
-  primary: '#42c8f5',
+  lightBlue: '#61c8f8',
+  darkGreen: '#071e22',
+  cornsilk: '#FFFAE3',
+  burnishedBrow: '#A37774',
+  deepTaupe: '#7D6167',
   white: '#ffffff'
 }
 
