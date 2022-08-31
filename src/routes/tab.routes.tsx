@@ -1,3 +1,4 @@
+import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Home, SearchSpecialists } from '../screens'
 import { routes } from '../utils/constants'
@@ -8,7 +9,7 @@ const { Navigator, Screen } = createBottomTabNavigator()
 
 export const LoginRoutes = () => {
   return (
-    <Navigator screenOptions={{ headerShown: false, tabBarActiveTintColor: theme.primary }}>
+    <Navigator screenOptions={{ headerShown: false, tabBarActiveTintColor: theme.lightBlue }}>
       <Screen
         name={routes.home}
         component={Home}

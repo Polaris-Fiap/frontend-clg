@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { useContext } from 'react'
-import { View, StyleSheet, SafeAreaView, StatusBar } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import { TextInput, Button, Text } from 'react-native-paper'
 import ContainerView from '../../components/ContainerView'
 import { AuthContext } from '../../contexts'
@@ -18,7 +18,7 @@ export const Login = () => {
           <TextInput label="Senha" mode="flat" style={styles.input} placeholder="Digite sua senha" />
           <Button style={styles.buttonEsqueceuSenha}>Esqueceu a senha?</Button>
         </View>
-        <Button mode="contained" style={styles.botao} onPress={() => handleLogin()}>
+        <Button mode="contained" style={styles.botao} onPress={() => handleLogin}>
           Entrar
         </Button>
         <Button onPress={() => navigation.navigate('cadastro')}>Não tem conta? Cadastre-se</Button>
@@ -36,13 +36,13 @@ const styles = StyleSheet.create({
   },
   input: {
     marginTop: 20,
-    backgroundColor: theme.primary
+    backgroundColor: theme.lightBlue
   },
   text: {
     fontSize: 42
   },
   botao: {
-    backgroundColor: theme.primary,
+    backgroundColor: theme.lightBlue,
     marginVertical: 20
   },
   texto: {

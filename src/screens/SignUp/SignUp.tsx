@@ -43,23 +43,23 @@ export const SignUp = () => {
             icon="account"
             style={page >= 1 ? styles.iconPreenchido : styles.iconNaoPreenchido}
             size={50}
-            color={page >= 1 ? theme.white : theme.primary}
+            color={page >= 1 ? theme.white : theme.lightBlue}
           />
 
-          <ProgressBar progress={0.2} color={theme.primary} />
+          <ProgressBar progress={0.2} color={theme.lightBlue} />
 
           <Avatar.Icon
             icon="badge-account-horizontal-outline"
             style={page >= 2 ? styles.iconPreenchido : styles.iconNaoPreenchido}
             size={50}
-            color={page >= 2 ? theme.white : theme.primary}
+            color={page >= 2 ? theme.white : theme.lightBlue}
           />
-          <ProgressBar progress={progess.dados} color={theme.primary} />
+          <ProgressBar progress={progess.dados} color={theme.lightBlue} />
           <Avatar.Icon
             icon="lock-outline"
             style={styles.iconNaoPreenchido}
             size={50}
-            color={theme.primary}
+            color={theme.lightBlue}
           />
         </View>
 
@@ -205,13 +205,13 @@ const styles = StyleSheet.create({
   },
   input: {
     marginTop: 20,
-    backgroundColor: theme.primary
+    backgroundColor: theme.lightBlue
   },
   titulo: {
     marginBottom: 20
   },
   botao: {
-    backgroundColor: theme.primary,
+    backgroundColor: theme.lightBlue,
     marginVertical: 20
   },
   texto: {
@@ -233,12 +233,12 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   iconPreenchido: {
-    backgroundColor: theme.primary,
+    backgroundColor: theme.lightBlue,
     color: theme.white,
     with: 24
   },
   iconNaoPreenchido: {
     backgroundColor: theme.white,
-    color: theme.primary
+    color: theme.lightBlue
   }
 })
