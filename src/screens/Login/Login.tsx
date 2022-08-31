@@ -12,16 +12,36 @@ export const Login = () => {
   return (
     <ContainerView>
       <View style={styles.grupoInput}>
-        <Text variant="headlineMedium">Login</Text>
-        <TextInput label="Email" mode="flat" style={styles.input} placeholder="Digite seu email" />
-        <View style={styles.inputPassword}>
-          <TextInput label="Senha" mode="flat" style={styles.input} placeholder="Digite sua senha" />
-          <Button style={styles.buttonEsqueceuSenha}>Esqueceu a senha?</Button>
+        <Text variant="headlineMedium" style={styles.texto}>
+          Login
+        </Text>
+        <TextInput
+          label="Email"
+          mode="outlined"
+          style={styles.input}
+          placeholder="Digite seu email"
+          activeOutlineColor={theme.lightBlue}
+        />
+        <View style={styles.viewPassword}>
+          <TextInput
+            label="Senha"
+            mode="outlined"
+            style={styles.input}
+            placeholder="Digite sua senha"
+            activeOutlineColor={theme.lightBlue}
+          />
+          <View style={styles.viewButtonEsqueceuSenha}>
+            <Button style={styles.buttonEsqueceuSenha} textColor={theme.lightBlue}>
+              Esqueceu a senha?
+            </Button>
+          </View>
         </View>
-        <Button mode="contained" style={styles.botao} onPress={() => handleLogin}>
+        <Button mode="contained" style={styles.botao} onPress={() => handleLogin()}>
           Entrar
         </Button>
-        <Button onPress={() => navigation.navigate('cadastro')}>Não tem conta? Cadastre-se</Button>
+        <Button onPress={() => navigation.navigate('cadastro')} textColor={theme.lightBlue}>
+          Não tem conta? Cadastre-se
+        </Button>
       </View>
     </ContainerView>
   )
@@ -36,20 +56,22 @@ const styles = StyleSheet.create({
   },
   input: {
     marginTop: 20,
-    backgroundColor: theme.lightBlue
-  },
-  text: {
-    fontSize: 42
+    backgroundColor: theme.cultured,
+    borderRadius: 20
   },
   botao: {
     backgroundColor: theme.lightBlue,
     marginVertical: 20
   },
   texto: {
-    marginBottom: 18
+    color: theme.lightBlue
   },
-  inputPassword: {
+  viewPassword: {
     marginBottom: 20
+  },
+  viewButtonEsqueceuSenha: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
   },
   buttonEsqueceuSenha: {
     width: 160
