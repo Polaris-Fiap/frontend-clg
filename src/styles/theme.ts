@@ -1,5 +1,6 @@
 export const theme = {
-  primary: '#42c8f5'
+  primary: '#42c8f5',
+  white: '#ffffff'
 }
 
 export type Theme = typeof theme
