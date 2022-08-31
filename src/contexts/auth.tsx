@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import React, { createContext, useState } from 'react'
+import { ReactFCProps } from '../@types/geral'
 
 interface AuthContextProps {
   logged?: boolean
@@ -11,7 +13,7 @@ export const AuthContext = createContext<AuthContextProps>({
   handleLogout: () => {}
 })
 
-export const AuthProvider: React.FC = ({ children }) => {
+export const AuthProvider: React.FC<ReactFCProps> = ({ children }: ReactFCProps) => {
   const [logged, setLogged] = useState<boolean>(false)
   const handleLogin = () => {
     setLogged(true)
