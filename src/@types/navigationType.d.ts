@@ -5,6 +5,8 @@ export declare global {
       buscaEspecialistas: undefined
       login: undefined
       cadastro: undefined
+      rotasEspecialista: undefined
+      perfilEspecialista: undefined
     }
   }
 }
