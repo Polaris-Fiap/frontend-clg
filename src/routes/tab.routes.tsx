@@ -1,9 +1,10 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { Home, SearchSpecialists } from '../screens'
+import { Home } from '../screens'
 import { routes } from '../utils/constants'
 import { MaterialIcons } from '@expo/vector-icons'
 import { theme } from '../styles/theme'
+import EspecilistaRoutes from './routes.especialista'
 
 const { Navigator, Screen } = createBottomTabNavigator()
 
@@ -19,8 +20,8 @@ export const LoginRoutes = () => {
         }}
       />
       <Screen
-        name={routes.searchSpecialists}
-        component={SearchSpecialists}
+        name={routes.rotasEspecialista}
+        component={EspecilistaRoutes}
         options={{
           tabBarLabel: 'Especialistas',
           tabBarIcon: ({ color, size }) => <MaterialIcons name="group" color={color} size={size} />
