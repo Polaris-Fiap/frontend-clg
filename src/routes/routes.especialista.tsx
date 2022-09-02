@@ -16,7 +16,7 @@ export const EspecilistaRoutes = () => {
       <Screen
         name={routes.perfilespecialista}
         component={PerfilEspecialista}
-        options={{ headerTitle: 'Perfil do especialista' }}
+        options={{ headerTitle: 'Perfil do especialista', animation: 'slide_from_bottom' }}
       />
     </Navigator>
   )
