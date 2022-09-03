@@ -5,20 +5,20 @@ import { Text } from 'react-native-paper'
 import CardEspecialista from '../../components/CardEspecialista'
 import InputSearch from '../../components/InputSearch'
 import { theme } from '../../styles/theme'
-import daniel from '../../assets/daniel.jpg'
-import claudio from '../../assets/caludio.jpg'
-import guilherme from '../../assets/guilherme.jpg'
-import henrique from '../../assets/henrique.jpg'
-
-const especialistas = [
-  { nome: 'Daniel', especialidade: 'Cardiologia', img: daniel },
-  { nome: 'Claudio', especialidade: 'Neurologista', img: claudio },
-  { nome: 'Guilherme', especialidade: 'Cardiologia', img: guilherme },
-  { nome: 'Henrique', especialidade: 'Neurologista', img: henrique }
-]
+import { especialistas } from '../../utils/constants/especialistas'
 
 export const SearchSpecialists = () => {
   const [search, setSearch] = useState<string>('')
+  const [listaEspecialistas, setListaEspecialistas] = useState<typeof especialistas>(especialistas)
+
+  const changeListaEspecilista = (valor: string) => {
+    setSearch(valor)
+    if (valor !== '') {
+      setListaEspecialistas(especialistas.filter(especialista => especialista.nome === valor))
+    } else {
+      setListaEspecialistas(especialistas)
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -27,8 +27,8 @@ export const SearchSpecialists = () => {
           <Text variant="titleLarge" style={styles.titulo}>
             Encontre um especialista aqui
           </Text>
-          <InputSearch value={search} onChangeText={setSearch} style={styles.search} />
-          {especialistas.map(especialista => (
+          <InputSearch value={search} onChangeText={changeListaEspecilista} style={styles.search} />
+          {listaEspecialistas.map(especialista => (
             <CardEspecialista
               nome={especialista.nome}
               especialidade={especialista.especialidade}
