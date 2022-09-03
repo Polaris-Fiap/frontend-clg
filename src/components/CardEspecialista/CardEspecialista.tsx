@@ -14,7 +14,10 @@ export interface CardEspecialistaProps {
 export const CardEspecialista = ({ nome, especialidade, img }: CardEspecialistaProps) => {
   const navigation = useNavigation()
   return (
-    <TouchableRipple onPress={() => navigation.navigate('perfilEspecialista')} style={{ marginBottom: 12 }}>
+    <TouchableRipple
+      onPress={() => navigation.navigate('perfilEspecialista', { nome })}
+      style={{ marginBottom: 12 }}
+    >
       <SafeAreaView style={styles.ViewCard}>
         <Image source={img} style={styles.Imagem} />
         <SafeAreaView style={{ justifyContent: 'center' }}>
