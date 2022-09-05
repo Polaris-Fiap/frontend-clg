@@ -11,7 +11,7 @@ export const Login = () => {
   const navigation = useNavigation()
   return (
     <ContainerView>
-      <View style={styles.grupoInput}>
+      <View style={styles.login}>
         <Text variant="headlineMedium" style={styles.texto}>
           Login
         </Text>
@@ -50,24 +50,25 @@ export const Login = () => {
 export default Login
 
 const styles = StyleSheet.create({
-  grupoInput: {
+  login: {
     justifyContent: 'center',
-    marginHorizontal: 40
+    marginHorizontal: 60,
+    marginVertical: 20
   },
   input: {
-    marginTop: 20,
+    marginTop: 16,
     backgroundColor: theme.cultured,
     borderRadius: 20
   },
   botao: {
     backgroundColor: theme.lightBlue,
-    marginVertical: 20
+    marginVertical: 10
   },
   texto: {
     color: theme.lightBlue
   },
   viewPassword: {
-    marginBottom: 20
+    marginBottom: 10
   },
   viewButtonEsqueceuSenha: {
     flexDirection: 'row',

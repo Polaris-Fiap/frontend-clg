@@ -24,7 +24,7 @@ export const SignUp = () => {
   const { handleSubmit, control } = useForm<Paciente>()
   const [, setPaciente] = useState<Paciente>()
   const [page, setPage] = useState<number>(0)
-  const [progess, setProgress] = useState<Progress>({ nome: 0, dados: 0 })
+  const [progess] = useState<Progress>({ nome: 0, dados: 0 })
 
   const onSubmit = (paciente: Paciente) => {
     console.debug(paciente)
@@ -71,9 +71,10 @@ export const SignUp = () => {
               render={({ field: { onChange, value } }) => (
                 <TextInput
                   label="Nome Completo"
-                  mode="flat"
+                  mode="outlined"
                   style={styles.input}
                   placeholder="Digite seu nome completo"
+                  activeOutlineColor={theme.lightBlue}
                   value={value}
                   onChangeText={onChange}
                 />
@@ -90,9 +91,10 @@ export const SignUp = () => {
               render={({ field: { onChange, value } }) => (
                 <TextInput
                   label="Email"
-                  mode="flat"
+                  mode="outlined"
                   style={styles.input}
                   placeholder="Digite seu email"
+                  activeOutlineColor={theme.lightBlue}
                   value={value}
                   onChangeText={onChange}
                 />
@@ -105,9 +107,10 @@ export const SignUp = () => {
               render={({ field: { onChange, value } }) => (
                 <TextInput
                   label="Endereço"
-                  mode="flat"
+                  mode="outlined"
                   style={styles.input}
                   placeholder="Digite seu endereço"
+                  activeOutlineColor={theme.lightBlue}
                   value={value}
                   onChangeText={onChange}
                 />
@@ -120,9 +123,10 @@ export const SignUp = () => {
               render={({ field: { onChange, value } }) => (
                 <TextInput
                   label="Telefone"
-                  mode="flat"
+                  mode="outlined"
                   style={styles.input}
                   placeholder="Digite seu telefone"
+                  activeOutlineColor={theme.lightBlue}
                   value={value}
                   onChangeText={onChange}
                 />
@@ -139,9 +143,10 @@ export const SignUp = () => {
               render={({ field: { onChange, value } }) => (
                 <TextInput
                   label="Senha"
-                  mode="flat"
+                  mode="outlined"
                   style={styles.input}
                   placeholder="Digite seu senha"
+                  activeOutlineColor={theme.lightBlue}
                   value={value}
                   onChangeText={onChange}
                 />
@@ -190,7 +195,9 @@ export const SignUp = () => {
           </View>
         )}
 
-        <Button onPress={() => navigation.navigate('login')}>Já tem uma conta? Entre aqui</Button>
+        <Button onPress={() => navigation.navigate('login')} textColor={theme.lightBlue}>
+          Já tem uma conta? Entre aqui
+        </Button>
       </View>
     </ContainerView>
   )
@@ -205,10 +212,12 @@ const styles = StyleSheet.create({
   },
   input: {
     marginTop: 20,
-    backgroundColor: theme.lightBlue
+    backgroundColor: theme.cultured,
+    borderRadius: 20
   },
   titulo: {
-    marginBottom: 20
+    marginBottom: 20,
+    color: theme.lightBlue
   },
   botao: {
     backgroundColor: theme.lightBlue,

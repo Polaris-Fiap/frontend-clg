@@ -1,4 +1,6 @@
 export const routes = {
   home: 'home',
-  searchSpecialists: 'buscaEspecialistas'
+  searchSpecialists: 'buscaEspecialistas',
+  perfilespecialista: 'perfilEspecialista',
+  rotasEspecialista: 'rotasEspecialista'
 }
