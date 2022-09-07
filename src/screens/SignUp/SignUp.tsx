@@ -1,12 +1,14 @@
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import React, { useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import { View, StyleSheet } from 'react-native'
-import { Button, Text, TextInput, Avatar, ProgressBar } from 'react-native-paper'
+import { Button, Text, TextInput, Avatar } from 'react-native-paper'
 import ContainerView from '../../components/ContainerView'
 import { theme } from '../../styles/theme'
+import Toast from 'react-native-toast-message'
 
-interface Paciente {
+export interface Paciente {
   nome: string
   email: string
   endereco?: string
@@ -14,21 +16,22 @@ interface Paciente {
   senha: string
 }
 
-interface Progress {
-  nome: number
-  dados: number
-}
-
 export const SignUp = () => {
   const navigation = useNavigation()
   const { handleSubmit, control } = useForm<Paciente>()
-  const [, setPaciente] = useState<Paciente>()
   const [page, setPage] = useState<number>(0)
-  const [progess] = useState<Progress>({ nome: 0, dados: 0 })
 
-  const onSubmit = (paciente: Paciente) => {
-    console.debug(paciente)
-    setPaciente(paciente)
+  const onSubmit = async (paciente: Paciente) => {
+    try {
+      await AsyncStorage.setItem('@user', JSON.stringify(paciente))
+      Toast.show({
+        type: 'success',
+        text1: 'Paciente cadastrado com sucesso'
+      })
+      navigation.navigate('login')
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   return (
@@ -46,15 +49,13 @@ export const SignUp = () => {
             color={page >= 1 ? theme.white : theme.lightBlue}
           />
 
-          <ProgressBar progress={0.2} color={theme.lightBlue} />
-
           <Avatar.Icon
             icon="badge-account-horizontal-outline"
             style={page >= 2 ? styles.iconPreenchido : styles.iconNaoPreenchido}
             size={50}
             color={page >= 2 ? theme.white : theme.lightBlue}
           />
-          <ProgressBar progress={progess.dados} color={theme.lightBlue} />
+
           <Avatar.Icon
             icon="lock-outline"
             style={styles.iconNaoPreenchido}
@@ -188,7 +189,7 @@ export const SignUp = () => {
             <Button
               mode="contained"
               style={[styles.botao, styles.botaoPage]}
-              onPress={() => handleSubmit(onSubmit)}
+              onPress={handleSubmit(onSubmit)}
             >
               Cadastrar
             </Button>
