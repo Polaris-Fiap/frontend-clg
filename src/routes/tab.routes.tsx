@@ -1,6 +1,6 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { Home } from '../screens'
+import { Home, PerfilUser } from '../screens'
 import { routes } from '../utils/constants'
 import { MaterialIcons } from '@expo/vector-icons'
 import { theme } from '../styles/theme'
@@ -25,6 +25,14 @@ export const LoginRoutes = () => {
         options={{
           tabBarLabel: 'Especialistas',
           tabBarIcon: ({ color, size }) => <MaterialIcons name="group" color={color} size={size} />
+        }}
+      />
+      <Screen
+        name={routes.perfilUser}
+        component={PerfilUser}
+        options={{
+          tabBarLabel: 'Perfil',
+          tabBarIcon: ({ color, size }) => <MaterialIcons name="person" color={color} size={size} />
         }}
       />
     </Navigator>

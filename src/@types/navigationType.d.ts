@@ -9,6 +9,7 @@ export declare global {
       perfilEspecialista: {
         nome: string
       }
+      perfilUser: undefined
     }
   }
 }
