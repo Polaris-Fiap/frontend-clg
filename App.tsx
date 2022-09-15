@@ -7,6 +7,7 @@ import { Routes } from './src/routes'
 
 import { Roboto_400Regular, Roboto_700Bold, useFonts } from '@expo-google-fonts/roboto'
 import * as SplashScreen from 'expo-splash-screen'
+import { theme } from './src/styles/theme'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -25,7 +26,7 @@ export default function App() {
   }
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: 'center' }} onLayout={onLayoutRootView}>
-      <StatusBar />
+      <StatusBar backgroundColor={theme.colors.cultured} />
       <AuthProvider>
         <Routes />
       </AuthProvider>
