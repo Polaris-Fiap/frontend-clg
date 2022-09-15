@@ -21,10 +21,15 @@ export const AuthContext = createContext<AuthContextProps>({
 export const AuthProvider: React.FC<ReactFCProps> = ({ children }: ReactFCProps) => {
   const [logged, setLogged] = useState<boolean>(false)
   const [user, setUser] = useState<Paciente>()
+
   const handleLogin = async (dados: Login) => {
-    if (dados.email === user?.email && dados.senha === user.senha) {
+    const json = await AsyncStorage.getItem('@user')
+    const userStorage = json && JSON.parse(json)
+    if (dados.email === userStorage?.email && dados.senha === userStorage.senha) {
       await AsyncStorage.setItem('@token', 'tokenUser')
       verifyUser()
+      getUser()
+      setLogged(true)
     } else {
       Toast.show({
         type: 'error',
@@ -37,18 +42,10 @@ export const AuthProvider: React.FC<ReactFCProps> = ({ children }: ReactFCProps)
     verifyUser()
   }
   const getUser = async () => {
-    try {
-      const json = await AsyncStorage.getItem('@user')
-      const user = json && JSON.parse(json)
-      setUser(user)
-    } catch (e) {
-      console.error(e)
-    }
+    const json = await AsyncStorage.getItem('@user')
+    const user = json && JSON.parse(json)
+    setUser(user)
   }
-
-  useEffect(() => {
-    getUser()
-  }, [])
 
   const verifyUser = async () => {
     const token = await AsyncStorage.getItem('@token')
@@ -60,6 +57,7 @@ export const AuthProvider: React.FC<ReactFCProps> = ({ children }: ReactFCProps)
   }
 
   useEffect(() => {
+    getUser()
     verifyUser()
   }, [])
 

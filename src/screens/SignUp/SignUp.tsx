@@ -6,7 +6,6 @@ import { View, StyleSheet } from 'react-native'
 import { Button, Text, TextInput, Avatar } from 'react-native-paper'
 import ContainerView from '../../components/ContainerView'
 import { theme } from '../../styles/theme'
-import Toast from 'react-native-toast-message'
 
 export interface Paciente {
   nome: string
@@ -22,13 +21,15 @@ export const SignUp = () => {
   const [page, setPage] = useState<number>(0)
 
   const onSubmit = async (paciente: Paciente) => {
+    await AsyncStorage.removeItem('@User')
     try {
       await AsyncStorage.setItem('@user', JSON.stringify(paciente))
-      Toast.show({
-        type: 'success',
-        text1: 'Paciente cadastrado com sucesso'
-      })
-      navigation.navigate('login')
+      const json = await AsyncStorage.getItem('@user')
+      const user = json && JSON.parse(json)
+      console.log(user)
+      if (user) {
+        navigation.navigate('login')
+      }
     } catch (e) {
       console.error(e)
     }

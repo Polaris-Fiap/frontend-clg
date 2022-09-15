@@ -21,6 +21,10 @@ export const Login = () => {
 
   return (
     <ContainerView>
+      <Text variant="displayMedium" style={styles.textAcallMe}>
+        ACall Me
+      </Text>
+
       <View style={styles.login}>
         <Text variant="headlineMedium" style={styles.texto}>
           Login
@@ -104,5 +108,11 @@ const styles = StyleSheet.create({
   },
   buttonEsqueceuSenha: {
     width: 160
+  },
+  textAcallMe: {
+    fontFamily: theme.text.titulo,
+    color: theme.colors.lightBlue,
+    textAlign: 'center',
+    marginBottom: 20
   }
 })
