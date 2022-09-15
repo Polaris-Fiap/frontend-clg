@@ -34,7 +34,7 @@ export const Login = () => {
               mode="outlined"
               style={styles.input}
               placeholder="Digite seu email"
-              activeOutlineColor={theme.lightBlue}
+              activeOutlineColor={theme.colors.lightBlue}
               onChangeText={onChange}
               value={value}
             />
@@ -51,7 +51,7 @@ export const Login = () => {
                 mode="outlined"
                 style={styles.input}
                 placeholder="Digite sua senha"
-                activeOutlineColor={theme.lightBlue}
+                activeOutlineColor={theme.colors.lightBlue}
                 onChangeText={onChange}
                 value={value}
               />
@@ -59,7 +59,7 @@ export const Login = () => {
           />
 
           <View style={styles.viewButtonEsqueceuSenha}>
-            <Button style={styles.buttonEsqueceuSenha} textColor={theme.lightBlue}>
+            <Button style={styles.buttonEsqueceuSenha} textColor={theme.colors.lightBlue}>
               Esqueceu a senha?
             </Button>
           </View>
@@ -67,7 +67,7 @@ export const Login = () => {
         <Button mode="contained" style={styles.botao} onPress={handleSubmit(handleLogin)}>
           Entrar
         </Button>
-        <Button onPress={() => navigation.navigate('cadastro')} textColor={theme.lightBlue}>
+        <Button onPress={() => navigation.navigate('cadastro')} textColor={theme.colors.lightBlue}>
           Não tem conta? Cadastre-se
         </Button>
       </View>
@@ -85,15 +85,15 @@ const styles = StyleSheet.create({
   },
   input: {
     marginTop: 16,
-    backgroundColor: theme.cultured,
+    backgroundColor: theme.colors.cultured,
     borderRadius: 20
   },
   botao: {
-    backgroundColor: theme.lightBlue,
+    backgroundColor: theme.colors.lightBlue,
     marginVertical: 10
   },
   texto: {
-    color: theme.lightBlue
+    color: theme.colors.lightBlue
   },
   viewPassword: {
     marginBottom: 10

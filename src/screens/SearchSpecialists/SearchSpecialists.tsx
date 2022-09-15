@@ -45,15 +45,15 @@ export const SearchSpecialists = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.cultured
+    backgroundColor: theme.colors.cultured
   },
   titulo: {
     textAlign: 'center',
-    color: theme.lightBlue
+    color: theme.colors.lightBlue
   },
   search: {
     width: 320,
-    backgroundColor: theme.cultured,
+    backgroundColor: theme.colors.cultured,
     marginVertical: 24
   },
   content: {

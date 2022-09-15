@@ -19,7 +19,7 @@ export const PerfilUser = () => {
           <Text style={styles.smallText}>Email: {user?.email}</Text>
         </View>
 
-        <Button onPress={() => handleLogout()} style={styles.botaoSair} textColor={theme.cultured}>
+        <Button onPress={() => handleLogout()} style={styles.botaoSair} textColor={theme.colors.cultured}>
           Sair
         </Button>
       </SafeAreaView>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     fontSize: 16
   },
   scrollView: {
-    backgroundColor: theme.cultured
+    backgroundColor: theme.colors.cultured
   },
   botaoSair: {
     backgroundColor: '#DB504A',

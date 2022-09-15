@@ -46,21 +46,21 @@ export const SignUp = () => {
             icon="account"
             style={page >= 1 ? styles.iconPreenchido : styles.iconNaoPreenchido}
             size={50}
-            color={page >= 1 ? theme.white : theme.lightBlue}
+            color={page >= 1 ? theme.colors.white : theme.colors.lightBlue}
           />
 
           <Avatar.Icon
             icon="badge-account-horizontal-outline"
             style={page >= 2 ? styles.iconPreenchido : styles.iconNaoPreenchido}
             size={50}
-            color={page >= 2 ? theme.white : theme.lightBlue}
+            color={page >= 2 ? theme.colors.white : theme.colors.lightBlue}
           />
 
           <Avatar.Icon
             icon="lock-outline"
             style={styles.iconNaoPreenchido}
             size={50}
-            color={theme.lightBlue}
+            color={theme.colors.lightBlue}
           />
         </View>
 
@@ -75,7 +75,7 @@ export const SignUp = () => {
                   mode="outlined"
                   style={styles.input}
                   placeholder="Digite seu nome completo"
-                  activeOutlineColor={theme.lightBlue}
+                  activeOutlineColor={theme.colors.lightBlue}
                   value={value}
                   onChangeText={onChange}
                 />
@@ -95,7 +95,7 @@ export const SignUp = () => {
                   mode="outlined"
                   style={styles.input}
                   placeholder="Digite seu email"
-                  activeOutlineColor={theme.lightBlue}
+                  activeOutlineColor={theme.colors.lightBlue}
                   value={value}
                   onChangeText={onChange}
                 />
@@ -111,7 +111,7 @@ export const SignUp = () => {
                   mode="outlined"
                   style={styles.input}
                   placeholder="Digite seu endereço"
-                  activeOutlineColor={theme.lightBlue}
+                  activeOutlineColor={theme.colors.lightBlue}
                   value={value}
                   onChangeText={onChange}
                 />
@@ -127,7 +127,7 @@ export const SignUp = () => {
                   mode="outlined"
                   style={styles.input}
                   placeholder="Digite seu telefone"
-                  activeOutlineColor={theme.lightBlue}
+                  activeOutlineColor={theme.colors.lightBlue}
                   value={value}
                   onChangeText={onChange}
                 />
@@ -147,7 +147,7 @@ export const SignUp = () => {
                   mode="outlined"
                   style={styles.input}
                   placeholder="Digite seu senha"
-                  activeOutlineColor={theme.lightBlue}
+                  activeOutlineColor={theme.colors.lightBlue}
                   value={value}
                   onChangeText={onChange}
                 />
@@ -196,7 +196,7 @@ export const SignUp = () => {
           </View>
         )}
 
-        <Button onPress={() => navigation.navigate('login')} textColor={theme.lightBlue}>
+        <Button onPress={() => navigation.navigate('login')} textColor={theme.colors.lightBlue}>
           Já tem uma conta? Entre aqui
         </Button>
       </View>
@@ -213,15 +213,15 @@ const styles = StyleSheet.create({
   },
   input: {
     marginTop: 20,
-    backgroundColor: theme.cultured,
+    backgroundColor: theme.colors.cultured,
     borderRadius: 20
   },
   titulo: {
     marginBottom: 20,
-    color: theme.lightBlue
+    color: theme.colors.lightBlue
   },
   botao: {
-    backgroundColor: theme.lightBlue,
+    backgroundColor: theme.colors.lightBlue,
     marginVertical: 20
   },
   texto: {
@@ -243,12 +243,12 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   iconPreenchido: {
-    backgroundColor: theme.lightBlue,
-    color: theme.white,
+    backgroundColor: theme.colors.lightBlue,
+    color: theme.colors.white,
     with: 24
   },
   iconNaoPreenchido: {
-    backgroundColor: theme.white,
-    color: theme.lightBlue
+    backgroundColor: theme.colors.white,
+    color: theme.colors.lightBlue
   }
 })
