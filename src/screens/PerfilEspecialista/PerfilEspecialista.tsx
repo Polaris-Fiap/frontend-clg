@@ -99,6 +99,6 @@ const styles = StyleSheet.create({
     marginBottom: 8
   },
   scrollView: {
-    backgroundColor: theme.cultured
+    backgroundColor: theme.colors.cultured
   }
 })

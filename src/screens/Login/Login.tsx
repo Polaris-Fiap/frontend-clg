@@ -6,40 +6,68 @@ import ContainerView from '../../components/ContainerView'
 import { AuthContext } from '../../contexts'
 import { theme } from '../../styles/theme'
 
+import { useForm, Controller } from 'react-hook-form'
+
+export interface Login {
+  email: string
+  senha: string
+}
+
 export const Login = () => {
   const { handleLogin } = useContext(AuthContext)
+  const { handleSubmit, control } = useForm<Login>()
+
   const navigation = useNavigation()
+
   return (
     <ContainerView>
       <View style={styles.login}>
         <Text variant="headlineMedium" style={styles.texto}>
           Login
         </Text>
-        <TextInput
-          label="Email"
-          mode="outlined"
-          style={styles.input}
-          placeholder="Digite seu email"
-          activeOutlineColor={theme.lightBlue}
+        <Controller
+          name="email"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <TextInput
+              label="Email"
+              mode="outlined"
+              style={styles.input}
+              placeholder="Digite seu email"
+              activeOutlineColor={theme.colors.lightBlue}
+              onChangeText={onChange}
+              value={value}
+            />
+          )}
         />
+
         <View style={styles.viewPassword}>
-          <TextInput
-            label="Senha"
-            mode="outlined"
-            style={styles.input}
-            placeholder="Digite sua senha"
-            activeOutlineColor={theme.lightBlue}
+          <Controller
+            name="senha"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                label="Senha"
+                mode="outlined"
+                style={styles.input}
+                placeholder="Digite sua senha"
+                activeOutlineColor={theme.colors.lightBlue}
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
           />
+
           <View style={styles.viewButtonEsqueceuSenha}>
-            <Button style={styles.buttonEsqueceuSenha} textColor={theme.lightBlue}>
+            <Button style={styles.buttonEsqueceuSenha} textColor={theme.colors.lightBlue}>
               Esqueceu a senha?
             </Button>
           </View>
         </View>
-        <Button mode="contained" style={styles.botao} onPress={() => handleLogin()}>
+        <Button mode="contained" style={styles.botao} onPress={handleSubmit(handleLogin)}>
           Entrar
         </Button>
-        <Button onPress={() => navigation.navigate('cadastro')} textColor={theme.lightBlue}>
+        <Button onPress={() => navigation.navigate('cadastro')} textColor={theme.colors.lightBlue}>
           Não tem conta? Cadastre-se
         </Button>
       </View>
@@ -57,15 +85,15 @@ const styles = StyleSheet.create({
   },
   input: {
     marginTop: 16,
-    backgroundColor: theme.cultured,
+    backgroundColor: theme.colors.cultured,
     borderRadius: 20
   },
   botao: {
-    backgroundColor: theme.lightBlue,
+    backgroundColor: theme.colors.lightBlue,
     marginVertical: 10
   },
   texto: {
-    color: theme.lightBlue
+    color: theme.colors.lightBlue
   },
   viewPassword: {
     marginBottom: 10

@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     width: 260,
     paddingVertical: 12,
     borderRadius: 12,
-    borderColor: theme.lightBlue,
+    borderColor: theme.colors.lightBlue,
     borderWidth: 1,
     flexDirection: 'row',
     justifyContent: 'space-around'
@@ -48,19 +48,19 @@ const styles = StyleSheet.create({
     borderRadius: 12
   },
   nome: {
-    color: theme.lightBlue,
+    color: theme.colors.lightBlue,
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center'
   },
   especialidade: {
-    color: theme.lightBlue,
+    color: theme.colors.lightBlue,
     fontSize: 14,
     textAlign: 'center'
   },
   textoBotao: {
     fontSize: 12,
-    color: theme.lightBlue,
+    color: theme.colors.lightBlue,
     textAlign: 'center'
   }
 })
