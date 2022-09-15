@@ -14,7 +14,9 @@ export const SearchSpecialists = () => {
   const changeListaEspecilista = (valor: string) => {
     setSearch(valor)
     if (valor !== '') {
-      setListaEspecialistas(especialistas.filter(especialista => especialista.nome === valor))
+      setListaEspecialistas(
+        especialistas.filter(especialista => especialista.nome.toLowerCase().includes(valor.toLowerCase()))
+      )
     } else {
       setListaEspecialistas(especialistas)
     }
