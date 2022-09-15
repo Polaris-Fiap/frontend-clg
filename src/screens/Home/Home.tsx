@@ -4,7 +4,6 @@ import { Avatar, Text } from 'react-native-paper'
 
 import { AuthContext } from '../../contexts'
 import { theme } from '../../styles/theme'
-import daniel from '../../assets/imgs/daniel.jpg'
 import { useNavigation } from '@react-navigation/native'
 
 export const Home = () => {
@@ -18,11 +17,16 @@ export const Home = () => {
             Olá
           </Text>
           <Text style={styles.textoNome} variant="headlineMedium">
-            {user?.nome}
+            {user?.nome.split(' ')[0]}
           </Text>
         </View>
-
-        <Avatar.Image size={52} source={daniel} onTouchStart={() => navigation.navigate('perfilUser')} />
+        {user?.nome && (
+          <Avatar.Text
+            size={52}
+            label={user?.nome.split(' ')[0].substring(0, 1)}
+            onTouchStart={() => navigation.navigate('perfilUser')}
+          />
+        )}
       </View>
     </ScrollView>
   )
