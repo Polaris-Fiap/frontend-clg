@@ -5,6 +5,7 @@ import { Avatar, Text } from 'react-native-paper'
 import { AuthContext } from '../../contexts'
 import { theme } from '../../styles/theme'
 import { useNavigation } from '@react-navigation/native'
+import Botao from '../../components/Botao'
 import Texto from '../../components/Texto'
 
 export const Home = () => {
@@ -29,6 +30,7 @@ export const Home = () => {
           />
         )}
       </View>
+      <Botao nome="aula git" />
       <Texto info="aula com o prof daniel" />
     </ScrollView>
   )
