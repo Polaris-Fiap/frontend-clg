@@ -5,6 +5,7 @@ import { Avatar, Text } from 'react-native-paper'
 import { AuthContext } from '../../contexts'
 import { theme } from '../../styles/theme'
 import { useNavigation } from '@react-navigation/native'
+import Botao from '../../components/Botao'
 
 export const Home = () => {
   const { user } = useContext(AuthContext)
@@ -27,6 +28,7 @@ export const Home = () => {
             onTouchStart={() => navigation.navigate('perfilUser')}
           />
         )}
+        <Botao nome="aula git" />
       </View>
     </ScrollView>
   )
