@@ -6,6 +6,7 @@ import { AuthContext } from '../../contexts'
 import { theme } from '../../styles/theme'
 import { useNavigation } from '@react-navigation/native'
 import Botao from '../../components/Botao'
+import Texto from '../../components/Texto'
 
 export const Home = () => {
   const { user } = useContext(AuthContext)
@@ -28,8 +29,9 @@ export const Home = () => {
             onTouchStart={() => navigation.navigate('perfilUser')}
           />
         )}
-        <Botao nome="aula git" />
       </View>
+      <Botao nome="aula git" />
+      <Texto info="aula com o prof daniel" />
     </ScrollView>
   )
 }
