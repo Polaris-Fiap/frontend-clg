@@ -5,7 +5,6 @@ import { Avatar, Text } from 'react-native-paper'
 import { AuthContext } from '../../contexts'
 import { theme } from '../../styles/theme'
 import { useNavigation } from '@react-navigation/native'
-import Texto from '../../components/Texto'
 
 export const Home = () => {
   const { user } = useContext(AuthContext)
@@ -29,7 +28,6 @@ export const Home = () => {
           />
         )}
       </View>
-      <Texto info="aula com o prof daniel" />
     </ScrollView>
   )
 }
