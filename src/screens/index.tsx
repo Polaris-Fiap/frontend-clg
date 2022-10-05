@@ -1,6 +1,6 @@
 export * from './Home'
 export * from './SearchSpecialists'
 export * from './Login'
-export * from './SignUp'
+export * from './SignUpPaciente'
 export * from './PerfilEspecialista'
 export * from './PerfilUser'
