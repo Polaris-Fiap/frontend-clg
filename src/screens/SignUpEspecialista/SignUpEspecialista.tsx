@@ -1,19 +1,20 @@
-// import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import React, { useState } from 'react'
-import { useForm, Controller } from 'react-hook-form'
-import { View, StyleSheet } from 'react-native'
-
-import { Button, Text, TextInput, Avatar, RadioButton } from 'react-native-paper'
+import { Controller, useForm, useWatch } from 'react-hook-form'
+import { StyleSheet, View } from 'react-native'
+import { Avatar, Button, RadioButton, Text, TextInput } from 'react-native-paper'
 import { api } from '../../api'
 import ContainerView from '../../components/ContainerView'
 import { theme } from '../../styles/theme'
 
-export interface User {
+export interface Especialista {
   nome: string
-  tipoUser: string
+  tipoEspecialista: 'PJ' | 'PF'
   dataNascimento: string
   email: string
+  tipoEspecialidade: string
+  descricaoSobre: string
+  valorConsulta: string
   genero: {
     nomeGenero: string
   }
@@ -36,65 +37,68 @@ export interface User {
   }
   telefone?: string
   senha: string
-  cpf: string
-  estadoCivil: string
-  profissao: string
+  cpf?: string
+  cpfDigito?: string
+  cnpj?: string
+  cnpjDigito?: string
+  razaoSocial?: string
 }
 
-export const SignUpPaciente = () => {
+export const SignUpEspecialista = () => {
   const navigation = useNavigation()
-  const { handleSubmit, control } = useForm<User>()
+  const { handleSubmit, control } = useForm<Especialista>()
   const [page, setPage] = useState<number>(0)
+  const { tipoEspecialista } = useWatch({ control: control })
 
-  const onSubmit = async (paciente: User) => {
-    // await AsyncStorage.removeItem('@User')
-    // try {
-    //   await AsyncStorage.setItem('@user', JSON.stringify(paciente))
-    //   const json = await AsyncStorage.getItem('@user')
-    //   const user = json && JSON.parse(json)
-    //   console.log(user)
-    //   if (user) {
-    //     navigation.navigate('login')
-    //   }
-    // } catch (e) {
-    //   console.error(e)
-    // }
-
-    const pacienteUser = {
-      nomePaciente: paciente.nome,
-      dtNascimento: '22/08/2002',
-      email: paciente.email,
-      senha: paciente.senha,
-      digitoCpf: 44,
+  const onSubmit = async (especialista: Especialista) => {
+    const especialistaUser = {
+      nomeEspecialista: especialista.nome,
+      email: especialista.email,
+      senha: especialista.senha,
+      dtNascimento: '22/01/2000',
       telefoneDDD: 11,
+      telefone: 11231,
+      descricaoSobre: especialista.descricaoSobre,
+      valorConsulta: especialista.valorConsulta,
+      tipoEspecialidade: especialista.tipoEspecialidade,
+      tipo: especialista.tipoEspecialista,
       genero: {
-        nomeGenero: paciente.genero.nomeGenero
+        nomeGenero: especialista.genero.nomeGenero
       },
       endereco: {
-        cep: paciente.endereco.cep,
-        complemento: paciente.endereco.complemento,
-        nomeRua: paciente.endereco.nomeRua,
-        numeroRua: paciente.endereco.numeroRua,
+        cep: especialista.endereco.cep,
+        complemento: especialista.endereco.complemento,
+        nomeRua: especialista.endereco.nomeRua,
+        numeroRua: especialista.endereco.numeroRua,
         bairro: {
-          nomeBairro: paciente.endereco.bairro.nomeBairro,
+          nomeBairro: especialista.endereco.bairro.nomeBairro,
           cidade: {
-            nomeCidade: paciente.endereco.bairro.cidade.nomeCidade,
-            siglaCidade: paciente.endereco.bairro.cidade.siglaCidade,
+            nomeCidade: especialista.endereco.bairro.cidade.nomeCidade,
+            siglaCidade: especialista.endereco.bairro.cidade.siglaCidade,
             estado: {
-              nomeEstado: paciente.endereco.bairro.cidade.estado.nomeEstado,
-              siglaEstado: paciente.endereco.bairro.cidade.estado.siglaEstado
+              nomeEstado: especialista.endereco.bairro.cidade.estado.nomeEstado,
+              siglaEstado: especialista.endereco.bairro.cidade.estado.siglaEstado
             }
           }
         }
-      },
-      telefone: paciente.telefone,
-      cpf: paciente.cpf,
-      estadoCivil: paciente.estadoCivil,
-      profissao: paciente.profissao
+      }
     }
 
     try {
-      await api.post('/api/paciente', pacienteUser)
+      if (tipoEspecialista === 'PJ') {
+        await api.post('/api/especialistaPj', {
+          ...especialistaUser,
+          cnpj: especialista.cnpj,
+          cnpjDigito: especialista.cnpjDigito,
+          razaoSocial: especialista.razaoSocial
+        })
+      } else if (tipoEspecialista === 'PF') {
+        await api.post('/api/especialistaPf', {
+          ...especialistaUser,
+          cpf: especialista.cpf,
+          digitoCpf: especialista.cpfDigito
+        })
+      }
     } catch (err) {
       console.log(err)
     }
@@ -104,7 +108,7 @@ export const SignUpPaciente = () => {
     <ContainerView>
       <View style={styles.grupoInput}>
         <Text variant="headlineMedium" style={styles.titulo}>
-          Cadastro de paciente
+          Cadastro de especialista
         </Text>
 
         <View style={styles.viewProgress}>
@@ -132,6 +136,24 @@ export const SignUpPaciente = () => {
 
         {page === 0 && (
           <View>
+            <Controller
+              control={control}
+              name="tipoEspecialista"
+              render={({ field: { onChange, value } }) => (
+                <RadioButton.Group onValueChange={onChange} value={value}>
+                  <View style={styles.viewGenero}>
+                    <View style={styles.viewItemGenero}>
+                      <RadioButton value="PJ" />
+                      <Text>PJ</Text>
+                    </View>
+                    <View style={styles.viewItemGenero}>
+                      <RadioButton value="PF" />
+                      <Text>PF</Text>
+                    </View>
+                  </View>
+                </RadioButton.Group>
+              )}
+            />
             <Controller
               control={control}
               name="nome"
@@ -164,17 +186,16 @@ export const SignUpPaciente = () => {
             />
             <Controller
               control={control}
-              name="cpf"
+              name="tipoEspecialidade"
               render={({ field: { onChange, value } }) => (
                 <TextInput
-                  label="CPF"
+                  label="Especialidade"
                   mode="outlined"
                   style={styles.input}
-                  placeholder="Digite seu CPF"
+                  placeholder="Digite sua especialidade"
                   activeOutlineColor={theme.colors.lightBlue}
                   value={value}
                   onChangeText={onChange}
-                  keyboardType="numeric"
                 />
               )}
             />
@@ -185,20 +206,20 @@ export const SignUpPaciente = () => {
           <View>
             <Controller
               control={control}
-              name="profissao"
+              name="valorConsulta"
               render={({ field: { onChange, value } }) => (
                 <TextInput
-                  label="Profissão"
+                  label="Valor por consulta"
                   mode="outlined"
                   style={styles.input}
-                  placeholder="Digite seu profissão"
+                  placeholder="Digite o valor por consulta"
                   activeOutlineColor={theme.colors.lightBlue}
                   value={value}
                   onChangeText={onChange}
+                  keyboardType="numeric"
                 />
               )}
             />
-
             <Controller
               control={control}
               name="telefone"
@@ -218,13 +239,13 @@ export const SignUpPaciente = () => {
 
             <Controller
               control={control}
-              name="estadoCivil"
+              name="descricaoSobre"
               render={({ field: { onChange, value } }) => (
                 <TextInput
-                  label="Estado Civil"
+                  label="Sobre"
                   mode="outlined"
                   style={styles.input}
-                  placeholder="Digite seu estado civil"
+                  placeholder="Fale sobre você"
                   activeOutlineColor={theme.colors.lightBlue}
                   value={value}
                   onChangeText={onChange}
@@ -382,7 +403,94 @@ export const SignUpPaciente = () => {
           </View>
         )}
 
-        {page === 4 && (
+        {page === 4 && tipoEspecialista === 'PJ' && (
+          <View>
+            <Controller
+              control={control}
+              name="cnpj"
+              render={({ field: { onChange, value } }) => (
+                <TextInput
+                  label="CNPJ"
+                  mode="outlined"
+                  style={styles.input}
+                  placeholder="Digite seu cnpj"
+                  activeOutlineColor={theme.colors.lightBlue}
+                  value={value}
+                  onChangeText={onChange}
+                  keyboardType="numeric"
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="cnpjDigito"
+              render={({ field: { onChange, value } }) => (
+                <TextInput
+                  label="Digito cnpj"
+                  mode="outlined"
+                  style={styles.input}
+                  placeholder="Digite o digito do cnpj"
+                  activeOutlineColor={theme.colors.lightBlue}
+                  value={value}
+                  onChangeText={onChange}
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="razaoSocial"
+              render={({ field: { onChange, value } }) => (
+                <TextInput
+                  label="Razão social"
+                  mode="outlined"
+                  style={styles.input}
+                  placeholder="Digite sua razão social"
+                  activeOutlineColor={theme.colors.lightBlue}
+                  value={value}
+                  onChangeText={onChange}
+                />
+              )}
+            />
+          </View>
+        )}
+
+        {page === 4 && tipoEspecialista === 'PF' && (
+          <View>
+            <Controller
+              control={control}
+              name="cpf"
+              render={({ field: { onChange, value } }) => (
+                <TextInput
+                  label="CPF"
+                  mode="outlined"
+                  style={styles.input}
+                  placeholder="Digite seu cpf"
+                  activeOutlineColor={theme.colors.lightBlue}
+                  value={value}
+                  onChangeText={onChange}
+                  keyboardType="numeric"
+                />
+              )}
+            />
+            <Controller
+              control={control}
+              name="cpfDigito"
+              render={({ field: { onChange, value } }) => (
+                <TextInput
+                  label="Digito cpf"
+                  mode="outlined"
+                  style={styles.input}
+                  placeholder="Digite o digito do cpf"
+                  activeOutlineColor={theme.colors.lightBlue}
+                  value={value}
+                  onChangeText={onChange}
+                />
+              )}
+            />
+          </View>
+        )}
+
+        {page === 5 && (
           <View>
             <View style={styles.containerGenero}>
               <Text>Genero:</Text>
@@ -441,7 +549,7 @@ export const SignUpPaciente = () => {
               Proximo
             </Button>
           </View>
-        ) : page !== 4 ? (
+        ) : page !== 5 ? (
           <View style={styles.viewPage}>
             <Button
               mode="contained"
@@ -485,7 +593,7 @@ export const SignUpPaciente = () => {
   )
 }
 
-export default SignUpPaciente
+export default SignUpEspecialista
 
 const styles = StyleSheet.create({
   grupoInput: {

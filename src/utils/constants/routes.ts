@@ -4,5 +4,8 @@ export const routes = {
   perfilespecialista: 'perfilEspecialista',
   rotasEspecialista: 'rotasEspecialista',
   rotasHome: 'rotasHome',
-  perfilUser: 'perfilUser'
+  perfilUser: 'perfilUser',
+  signUpPaciente: 'signUpPaciente',
+  signUp: 'signUp',
+  signUpEspecialista: 'signUpEspecialista'
 }

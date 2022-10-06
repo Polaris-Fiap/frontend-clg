@@ -17,13 +17,13 @@ export const Home = () => {
             Olá
           </Text>
           <Text style={styles.textoNome} variant="headlineMedium">
-            {user?.nome.split(' ')[0]}
+            {user?.nomePaciente && user.nomePaciente.split(' ')[0]}
           </Text>
         </View>
-        {user?.nome && (
+        {user?.nomePaciente && (
           <Avatar.Text
             size={52}
-            label={user?.nome.split(' ')[0].substring(0, 1)}
+            label={user?.nomePaciente.split(' ')[0].substring(0, 1)}
             onTouchStart={() => navigation.navigate('perfilUser')}
           />
         )}

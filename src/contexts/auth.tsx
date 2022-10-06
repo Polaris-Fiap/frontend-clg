@@ -2,12 +2,13 @@
 import React, { createContext, useState, useEffect } from 'react'
 import { ReactFCProps } from '../@types/geral'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { Login, Paciente } from '../screens'
-import Toast from 'react-native-toast-message'
+import { Login } from '../screens'
+import { api } from '../api'
+import { PacienteApi } from '../@types/typesApi'
 
 interface AuthContextProps {
   logged?: boolean
-  user?: Paciente
+  user?: PacienteApi
   handleLogin: (dados: Login) => void
   handleLogout: () => void
 }
@@ -20,44 +21,49 @@ export const AuthContext = createContext<AuthContextProps>({
 
 export const AuthProvider: React.FC<ReactFCProps> = ({ children }: ReactFCProps) => {
   const [logged, setLogged] = useState<boolean>(false)
-  const [user, setUser] = useState<Paciente>()
+  const [user, setUser] = useState<PacienteApi>()
+
+  const getUserApi = async () => {
+    try {
+      const response = await api.get<PacienteApi[]>('/api/paciente')
+      return response.data
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   const handleLogin = async (dados: Login) => {
-    const json = await AsyncStorage.getItem('@user')
-    const userStorage = json && JSON.parse(json)
-    if (dados.email === userStorage?.email && dados.senha === userStorage.senha) {
-      await AsyncStorage.setItem('@token', 'tokenUser')
-      verifyUser()
-      getUser()
-      setLogged(true)
-    } else {
-      Toast.show({
-        type: 'error',
-        text1: 'Email ou senha inválidos.'
-      })
+    const users = await getUserApi()
+    const user = users?.filter(info => info.email === dados.email && info.senha === dados.senha)
+    await AsyncStorage.removeItem('@UserId')
+    if (user) {
+      try {
+        await AsyncStorage.setItem('@UserId', JSON.stringify(user[0]))
+        setUser(user[0])
+        setLogged(true)
+      } catch (e) {
+        console.log(e)
+      }
     }
   }
   const handleLogout = async () => {
-    await AsyncStorage.removeItem('@token')
+    await AsyncStorage.removeItem('@UserId')
     verifyUser()
-  }
-  const getUser = async () => {
-    const json = await AsyncStorage.getItem('@user')
-    const user = json && JSON.parse(json)
-    setUser(user)
   }
 
   const verifyUser = async () => {
-    const token = await AsyncStorage.getItem('@token')
-    if (token) {
+    const infoUser = await AsyncStorage.getItem('@UserId')
+    const info = infoUser && JSON.parse(infoUser)
+    const dados = await api.get<PacienteApi>(`/api/paciente/${info.id}`)
+    if (dados.data) {
       setLogged(true)
+      setUser(info)
     } else {
       setLogged(false)
     }
   }
 
   useEffect(() => {
-    getUser()
     verifyUser()
   }, [])
 

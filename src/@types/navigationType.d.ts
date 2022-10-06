@@ -10,6 +10,10 @@ export declare global {
         nome: string
       }
       perfilUser: undefined
+      rotasCadastro: undefined
+      signUp: undefined
+      signUpPaciente: undefined
+      signUpEspecialista: undefined
     }
   }
 }

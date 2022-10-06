@@ -11,7 +11,7 @@ export const PerfilUser = () => {
       <SafeAreaView style={styles.container}>
         <View style={styles.user}>
           <View style={styles.info}>
-            <Text style={styles.nome}>{user?.nome}</Text>
+            <Text style={styles.nome}>{user?.nomePaciente}</Text>
           </View>
         </View>
         <View style={styles.infoSub}>
