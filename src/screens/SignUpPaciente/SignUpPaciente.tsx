@@ -47,19 +47,6 @@ export const SignUpPaciente = () => {
   const [page, setPage] = useState<number>(0)
 
   const onSubmit = async (paciente: User) => {
-    // await AsyncStorage.removeItem('@User')
-    // try {
-    //   await AsyncStorage.setItem('@user', JSON.stringify(paciente))
-    //   const json = await AsyncStorage.getItem('@user')
-    //   const user = json && JSON.parse(json)
-    //   console.log(user)
-    //   if (user) {
-    //     navigation.navigate('login')
-    //   }
-    // } catch (e) {
-    //   console.error(e)
-    // }
-
     const pacienteUser = {
       nomePaciente: paciente.nome,
       dtNascimento: '22/08/2002',
@@ -95,6 +82,7 @@ export const SignUpPaciente = () => {
 
     try {
       await api.post('/api/paciente', pacienteUser)
+      navigation.navigate('login')
     } catch (err) {
       console.log(err)
     }

@@ -48,16 +48,19 @@ export const AuthProvider: React.FC<ReactFCProps> = ({ children }: ReactFCProps)
   }
   const handleLogout = async () => {
     await AsyncStorage.removeItem('@UserId')
+    setUser(undefined)
     verifyUser()
   }
 
   const verifyUser = async () => {
     const infoUser = await AsyncStorage.getItem('@UserId')
     const info = infoUser && JSON.parse(infoUser)
-    const dados = await api.get<PacienteApi>(`/api/paciente/${info.id}`)
-    if (dados.data) {
-      setLogged(true)
-      setUser(info)
+    if (info) {
+      const dados = await api.get<PacienteApi>(`/api/paciente/${info.id}`)
+      if (dados.data) {
+        setLogged(true)
+        setUser(info)
+      }
     } else {
       setLogged(false)
     }
