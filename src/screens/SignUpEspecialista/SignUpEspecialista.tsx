@@ -92,12 +92,14 @@ export const SignUpEspecialista = () => {
           cnpjDigito: especialista.cnpjDigito,
           razaoSocial: especialista.razaoSocial
         })
+        navigation.navigate('login')
       } else if (tipoEspecialista === 'PF') {
         await api.post('/api/especialistaPf', {
           ...especialistaUser,
           cpf: especialista.cpf,
           digitoCpf: especialista.cpfDigito
         })
+        navigation.navigate('login')
       }
     } catch (err) {
       console.log(err)
