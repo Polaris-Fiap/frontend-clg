@@ -7,8 +7,8 @@ import { api } from '../../api'
 import ContainerView from '../../components/ContainerView'
 import { theme } from '../../styles/theme'
 
-export interface Especialista {
-  nome: string
+export interface EspecialistaCadastro {
+  nomeEspecialista: string
   tipoEspecialista: 'PJ' | 'PF'
   dataNascimento: string
   email: string
@@ -46,13 +46,13 @@ export interface Especialista {
 
 export const SignUpEspecialista = () => {
   const navigation = useNavigation()
-  const { handleSubmit, control } = useForm<Especialista>()
+  const { handleSubmit, control } = useForm<EspecialistaCadastro>()
   const [page, setPage] = useState<number>(0)
   const { tipoEspecialista } = useWatch({ control: control })
 
-  const onSubmit = async (especialista: Especialista) => {
+  const onSubmit = async (especialista: EspecialistaCadastro) => {
     const especialistaUser = {
-      nomeEspecialista: especialista.nome,
+      nomeEspecialista: especialista.nomeEspecialista,
       email: especialista.email,
       senha: especialista.senha,
       dtNascimento: '22/01/2000',
@@ -156,7 +156,7 @@ export const SignUpEspecialista = () => {
             />
             <Controller
               control={control}
-              name="nome"
+              name="nomeEspecialista"
               render={({ field: { onChange, value } }) => (
                 <TextInput
                   label="Nome Completo"
