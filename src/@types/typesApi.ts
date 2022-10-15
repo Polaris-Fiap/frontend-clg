@@ -115,6 +115,49 @@ export interface EspecialistaPjApi {
   razaoSocial?: string
 }
 
+export interface Especialista {
+  codEspecialista: number
+  nomeEspecialista?: string
+  email?: string
+  senha?: string
+  dtNascimento?: string
+  telefoneDDD?: number
+  telefone?: number
+  descricaoSobre?: string
+  tipoEspecialidade?: string
+  tipo?: string
+  genero?: {
+    id: number
+    nomeGenero: string
+  }
+  endereco?: {
+    id: number
+    cep: number
+    nomeRua: string
+    numeroRua: number
+    complemento: string
+    bairro: {
+      codBairro: number
+      nomeBairro: string
+      cidade: {
+        codCidade: number
+        nomeCidade: string
+        siglaCidade: string
+        estado: {
+          codEstado: number
+          nomeEstado: string
+          siglaEstado: string
+        }
+      }
+    }
+  }
+  cnpj?: number
+  cnpjDigito?: number
+  razaoSocial?: string
+  cpf?: number
+  digitoCpf?: number
+}
+
 export interface Paciente {
   nomePaciente?: string
   email?: string
