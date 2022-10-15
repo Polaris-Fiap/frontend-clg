@@ -4,11 +4,12 @@ import { ReactFCProps } from '../@types/geral'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Login } from '../screens'
 import { api } from '../api'
-import { PacienteApi } from '../@types/typesApi'
+import { Especialista, EspecialistaPfApi, EspecialistaPjApi, PacienteApi } from '../@types/typesApi'
 
 interface AuthContextProps {
   logged?: boolean
   user?: PacienteApi
+  especialista?: Especialista
   handleLogin: (dados: Login) => void
   handleLogout: () => void
 }
@@ -22,6 +23,7 @@ export const AuthContext = createContext<AuthContextProps>({
 export const AuthProvider: React.FC<ReactFCProps> = ({ children }: ReactFCProps) => {
   const [logged, setLogged] = useState<boolean>(false)
   const [user, setUser] = useState<PacienteApi>()
+  const [especialista, setEspecialista] = useState<Especialista>()
 
   const getUserApi = async () => {
     try {
@@ -32,37 +34,125 @@ export const AuthProvider: React.FC<ReactFCProps> = ({ children }: ReactFCProps)
     }
   }
 
+  const getEspecialistaPfApi = async () => {
+    try {
+      const response = await api.get<EspecialistaPfApi[]>('/api/especialistaPf')
+      return response.data
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const getEspecialistaPjApi = async () => {
+    try {
+      const response = await api.get<EspecialistaPjApi[]>('/api/especialistaPj')
+      return response.data
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   const handleLogin = async (dados: Login) => {
-    const users = await getUserApi()
-    const user = users?.filter(info => info.email === dados.email && info.senha === dados.senha)
-    await AsyncStorage.removeItem('@UserId')
-    if (user) {
-      try {
-        await AsyncStorage.setItem('@UserId', JSON.stringify(user[0]))
-        setUser(user[0])
-        setLogged(true)
-      } catch (e) {
-        console.log(e)
+    if (dados.tipoUser === 'paciente') {
+      const users = await getUserApi()
+      const user =
+        users && users.filter(info => info.email === dados.email && info.senha === dados.senha)[0]
+      if (user) {
+        try {
+          await AsyncStorage.setItem('@UserId', JSON.stringify(user.id))
+          await AsyncStorage.setItem('@TipoUser', JSON.stringify(dados.tipoUser))
+          setUser(user)
+          setLogged(true)
+        } catch (e) {
+          console.log(e)
+        }
+      }
+    } else if (dados.tipoUser === 'especialista') {
+      if (dados.tipoEspecialista === 'pf') {
+        const users = await getEspecialistaPfApi()
+        const user =
+          users && users.filter(info => info.email === dados.email && info.senha === dados.senha)[0]
+        if (user) {
+          try {
+            await AsyncStorage.setItem('@UserId', JSON.stringify(user.codEspecialista))
+            await AsyncStorage.setItem('@TipoUser', JSON.stringify(dados.tipoEspecialista))
+            setEspecialista(user)
+            setLogged(true)
+          } catch (e) {
+            console.log(e)
+          }
+        }
+      } else if (dados.tipoEspecialista === 'pj') {
+        const users = await getEspecialistaPjApi()
+        const user =
+          users && users.filter(info => info.email === dados.email && info.senha === dados.senha)[0]
+        if (user) {
+          try {
+            await AsyncStorage.setItem('@UserId', JSON.stringify(user.codEspecialista))
+            await AsyncStorage.setItem('@TipoUser', JSON.stringify(dados.tipoEspecialista))
+            setEspecialista(user)
+            setLogged(true)
+          } catch (e) {
+            console.log(e)
+          }
+        }
       }
     }
   }
   const handleLogout = async () => {
     await AsyncStorage.removeItem('@UserId')
-    setUser(undefined)
+    await AsyncStorage.removeItem('@TipoUser')
     verifyUser()
   }
 
   const verifyUser = async () => {
     const infoUser = await AsyncStorage.getItem('@UserId')
-    const info = infoUser && JSON.parse(infoUser)
-    if (info) {
-      const dados = await api.get<PacienteApi>(`/api/paciente/${info.id}`)
-      if (dados.data) {
-        setLogged(true)
-        setUser(info)
+    const tipoUser = await AsyncStorage.getItem('@TipoUser')
+    if (infoUser) {
+      if (tipoUser === 'paciente') {
+        try {
+          const dados = await api.get<PacienteApi>(`/api/paciente/${infoUser}`)
+          if (dados.data) {
+            setLogged(true)
+            setUser(dados.data)
+          }
+        } catch (e) {
+          await AsyncStorage.removeItem('@UserId')
+          await AsyncStorage.removeItem('@TipoUser')
+          setLogged(false)
+          setUser(undefined)
+        }
+      } else if (tipoUser === 'pj') {
+        try {
+          const dados = await api.get<EspecialistaPjApi>(`api/especialistaPj${infoUser}`)
+          if (dados.data) {
+            setLogged(true)
+            setEspecialista(dados.data)
+          }
+        } catch (e) {
+          await AsyncStorage.removeItem('@UserId')
+          await AsyncStorage.removeItem('@TipoUser')
+          setLogged(false)
+          setEspecialista(undefined)
+        }
+      } else if (tipoUser === 'pf') {
+        try {
+          const dados = await api.get<EspecialistaPfApi>(`api/especialistaPf${infoUser}`)
+          if (dados.data) {
+            setLogged(true)
+            setEspecialista(dados.data)
+          }
+        } catch (e) {
+          await AsyncStorage.removeItem('@UserId')
+          await AsyncStorage.removeItem('@TipoUser')
+          setLogged(false)
+          setEspecialista(undefined)
+        }
       }
     } else {
       setLogged(false)
+      setUser(undefined)
+      setEspecialista(undefined)
     }
   }
 
@@ -71,7 +161,7 @@ export const AuthProvider: React.FC<ReactFCProps> = ({ children }: ReactFCProps)
   }, [])
 
   return (
-    <AuthContext.Provider value={{ handleLogin, handleLogout, logged, user }}>
+    <AuthContext.Provider value={{ handleLogin, handleLogout, logged, user, especialista }}>
       {children}
     </AuthContext.Provider>
   )
