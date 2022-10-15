@@ -1,14 +1,16 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { useContext } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { TextInput, Button, Text } from 'react-native-paper'
+import { TextInput, Button, Text, RadioButton } from 'react-native-paper'
 import ContainerView from '../../components/ContainerView'
 import { AuthContext } from '../../contexts'
 import { theme } from '../../styles/theme'
 
-import { useForm, Controller } from 'react-hook-form'
+import { useForm, Controller, useWatch } from 'react-hook-form'
 
 export interface Login {
+  tipoUser: 'paciente' | 'especialista'
+  tipoEspecialista: 'pj' | 'pf'
   email: string
   senha: string
 }
@@ -16,6 +18,7 @@ export interface Login {
 export const Login = () => {
   const { handleLogin } = useContext(AuthContext)
   const { handleSubmit, control } = useForm<Login>()
+  const tipoUser = useWatch({ control: control, name: 'tipoUser' })
 
   const navigation = useNavigation()
 
@@ -29,6 +32,57 @@ export const Login = () => {
         <Text variant="headlineMedium" style={styles.texto}>
           Login
         </Text>
+
+        <View style={styles.containerTipo}>
+          <Text>Tipo de usuario:</Text>
+          <View>
+            <Controller
+              name="tipoUser"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <RadioButton.Group onValueChange={onChange} value={value}>
+                  <View style={styles.viewTipo}>
+                    <View style={styles.viewItemTipo}>
+                      <RadioButton value="paciente" />
+                      <Text>Paciente</Text>
+                    </View>
+                    <View style={styles.viewItemTipo}>
+                      <RadioButton value="especialista" />
+                      <Text>Especialista</Text>
+                    </View>
+                  </View>
+                </RadioButton.Group>
+              )}
+            />
+          </View>
+        </View>
+
+        {tipoUser === 'especialista' && (
+          <View style={styles.containerTipo}>
+            <Text>Tipo de especialista:</Text>
+            <View>
+              <Controller
+                name="tipoEspecialista"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <RadioButton.Group onValueChange={onChange} value={value}>
+                    <View style={styles.viewTipo}>
+                      <View style={styles.viewItemTipo}>
+                        <RadioButton value="pf" />
+                        <Text>PF</Text>
+                      </View>
+                      <View style={styles.viewItemTipo}>
+                        <RadioButton value="pj" />
+                        <Text>PJ</Text>
+                      </View>
+                    </View>
+                  </RadioButton.Group>
+                )}
+              />
+            </View>
+          </View>
+        )}
+
         <Controller
           name="email"
           control={control}
@@ -114,5 +168,20 @@ const styles = StyleSheet.create({
     color: theme.colors.lightBlue,
     textAlign: 'center',
     marginBottom: 20
+  },
+  viewTipo: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  viewItemTipo: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  containerTipo: {
+    marginTop: 16
   }
 })
