@@ -7,7 +7,8 @@ export declare global {
       cadastro: undefined
       rotasEspecialista: undefined
       perfilEspecialista: {
-        nome: string
+        tipo: string
+        id: number
       }
       perfilUser: undefined
       rotasCadastro: undefined
