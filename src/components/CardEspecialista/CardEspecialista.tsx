@@ -1,25 +1,25 @@
 import { useNavigation } from '@react-navigation/native'
 import React from 'react'
-import { Image, SafeAreaView, StyleSheet, Text } from 'react-native'
+import { SafeAreaView, StyleSheet, Text } from 'react-native'
 import { TouchableRipple } from 'react-native-paper'
 import { theme } from '../../styles/theme'
 
 export interface CardEspecialistaProps {
   nome: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  img: any
   especialidade: string
+  tipo: string
+  id: number
 }
 
-export const CardEspecialista = ({ nome, especialidade, img }: CardEspecialistaProps) => {
+export const CardEspecialista = ({ nome, especialidade, tipo, id }: CardEspecialistaProps) => {
   const navigation = useNavigation()
   return (
     <TouchableRipple
-      onPress={() => navigation.navigate('perfilEspecialista', { nome })}
+      onPress={() => navigation.navigate('perfilEspecialista', { tipo: tipo, id: id })}
       style={{ marginBottom: 12 }}
     >
       <SafeAreaView style={styles.ViewCard}>
-        <Image source={img} style={styles.Imagem} />
         <SafeAreaView style={{ justifyContent: 'center' }}>
           <Text style={styles.nome}>{nome}</Text>
           <Text style={styles.especialidade}>{especialidade}</Text>
