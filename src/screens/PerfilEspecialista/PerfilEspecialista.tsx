@@ -1,49 +1,65 @@
 import { useRoute } from '@react-navigation/native'
-import React from 'react'
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Button } from 'react-native-paper'
+import { api } from '../../api'
 import { theme } from '../../styles/theme'
-import { especialistas } from '../../utils/constants/especialistas'
+import { Especialista } from '../SearchSpecialists'
 
 interface Params {
-  nome: string
+  tipo: string
+  id: number
 }
 
 export const PerfilEspecialista = () => {
   const route = useRoute()
-  const { nome } = route.params as Params
-  const especilista = especialistas.filter(especialistas => especialistas.nome === nome)
+  const { tipo, id } = route.params as Params
+  const [especialista, setEspecialista] = useState<Especialista>()
+
+  const buscarEspecialista = async () => {
+    if (tipo === 'PJ') {
+      try {
+        const pj = await api.get<Especialista>(`/api/especialistaPj/${id}`)
+        if (pj.data) {
+          setEspecialista(pj.data)
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    } else {
+      try {
+        const pf = await api.get<Especialista>(`/api/especialistaPf/${id}`)
+        if (pf.data) {
+          setEspecialista(pf.data)
+        }
+      } catch (e) {
+        console.log(e)
+      }
+    }
+  }
+  useEffect(() => {
+    buscarEspecialista()
+  }, [])
+
   return (
     <ScrollView style={styles.scrollView}>
       <SafeAreaView style={styles.container}>
         <View style={styles.especialista}>
-          <Image source={especilista[0].img} style={styles.imagemEspecialista} />
-          <View style={styles.info}>
-            <Text style={styles.nomeEspecialista}>{especilista[0].nome}</Text>
-            <Text style={styles.smallText}>{especilista[0].especialidade}</Text>
-            <Text style={styles.smallText}>4 *</Text>
-          </View>
+          <Text style={styles.nomeEspecialista}>{especialista?.nomeEspecialista}</Text>
+          <Text style={styles.especialidade}>{especialista?.tipoEspecialidade}</Text>
         </View>
         <View style={styles.infoSub}>
-          <Text style={styles.titulo}>Especialidades</Text>
-          <Text style={styles.smallText}>Ecocardiografia</Text>
+          <Text style={styles.titulo}>Sobre</Text>
+          <Text style={styles.smallText}>{especialista?.descricaoSobre}</Text>
         </View>
         <View style={styles.infoSub}>
-          <Text style={styles.titulo}>Formação acadêmica</Text>
-          <Text style={styles.marignText}>
-            Graduação em Medicina: Faculdade de Medicina da Universidade de Mogi das Cruzes
-          </Text>
-          <Text style={styles.marignText}>
-            Especialização em Clínica Médica: Faculdade de Medicina da Santa Casa de Misericórdia de São
-            Paulo
-          </Text>
-          <Text style={styles.marignText}>
-            Especialização em Cardiologia: Escola Paulista de Medicina / UNIFESP
-          </Text>
+          <Text style={styles.titulo}>Informações de contato</Text>
+          <Text style={styles.marignText}>Email: {especialista?.email}</Text>
         </View>
-        <View style={styles.infoSub}>
-          <Text style={styles.titulo}>Serviços e preços</Text>
-          <Text style={styles.smallText}>Preço da consulta: R$ 400</Text>
-        </View>
+
+        <Button style={styles.botao} textColor="white">
+          Marcar consulta
+        </Button>
       </SafeAreaView>
     </ScrollView>
   )
@@ -63,16 +79,15 @@ const styles = StyleSheet.create({
   },
   nomeEspecialista: {
     fontSize: 24,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    textAlign: 'center'
   },
   especialista: {
     width: 280,
     maxHeight: 100,
     padding: 12,
     marginBottom: 24,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     borderBottomWidth: 1,
     borderBottomColor: 'black'
   },
@@ -91,8 +106,12 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     color: '#61c8f8'
   },
+  especialidade: {
+    fontSize: 20,
+    textAlign: 'center'
+  },
   smallText: {
-    fontSize: 12
+    fontSize: 16
   },
   marignText: {
     fontSize: 12,
@@ -100,5 +119,9 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     backgroundColor: theme.colors.cultured
+  },
+  botao: {
+    backgroundColor: theme.colors.lightBlue,
+    marginVertical: 10
   }
 })
