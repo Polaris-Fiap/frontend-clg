@@ -98,9 +98,7 @@ export const PerfilUser = () => {
   }
 
   const updateEspecialista = async (dados: UpdateEspecialista) => {
-    const tipoUser = await AsyncStorage.getItem('@TipoUser')
-    console.log(especialista?.codEspecialista)
-    if (tipoUser === 'pf') {
+    if (especialista?.tipo === 'PF') {
       const info = {
         codEspecialista: especialista?.codEspecialista,
         nomeEspecialista: especialista?.nomeEspecialista,
@@ -122,7 +120,7 @@ export const PerfilUser = () => {
       } catch (err) {
         console.log(err)
       }
-    } else if (tipoUser === 'pj') {
+    } else if (especialista?.tipo === 'PJ') {
       const info = {
         codEspecialista: especialista?.codEspecialista,
         nomeEspecialista: especialista?.nomeEspecialista,
